@@ -3,6 +3,10 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const User = db.define('user', {
+  userName: {
+    type: Sequelize.STRING,
+    defaultValue: `Agent${Date.now() % 100000}`
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,
