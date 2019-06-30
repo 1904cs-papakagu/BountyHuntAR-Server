@@ -127,3 +127,46 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+body {
+  background-color: #0d0e10;
+  color: #611414;
+}
+
+h1 {
+  font-size: 36px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-weight: bold;
+}
+
+nav {
+  font-size: 18px;
+}
+
+span {
+  font-size: 12px;
+}
+
+a {
+  color: #8c943c;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  padding-right: 18px;
+}
+
+.navbar {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(#e0d971, #0d0e10);
+  color: #611414;
+  margin-bottom: 30px;
+}
+.navigation-area {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  width: 80%;
+}
