@@ -170,3 +170,9 @@ a {
   justify-content: space-between;
   width: 80%;
 }
+
+.auth {
+  display: flex;
+  flex-flow: column;
+  padding-left: 36px;
+}
