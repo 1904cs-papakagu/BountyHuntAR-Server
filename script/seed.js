@@ -17,6 +17,16 @@ async function seed() {
       GPS: [40.7050975, -74.00901303],
       isActive: true,
       radius: 50
+    }),
+    Location.create({
+      GPS: [0, 0],
+      isActive: false,
+      radius: 50
+    }),
+    Location.create({
+      GPS: [180, 0],
+      isActive: false,
+      radius: 50
     })
   ])
 
