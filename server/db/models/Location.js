@@ -3,7 +3,7 @@ const db = require('../db')
 
 const Location = db.define('location', {
   GPS: {
-    type: Sequlize.ARRAY(Sequelize.DOUBLE),
+    type: Sequelize.ARRAY(Sequelize.DOUBLE),
     allowNull: false
   },
   isActive: {
@@ -11,7 +11,7 @@ const Location = db.define('location', {
     defaultValue: false
   },
   radius: {
-    type: Sequlize.INTEGER,
+    type: Sequelize.INTEGER,
     allowNull: false
   }
 })
