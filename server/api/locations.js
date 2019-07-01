@@ -4,27 +4,28 @@ module.exports = router
 
 router.put('/active', async (req, res, next) => {
   try {
-    const games = await Location.findAll({
+    const [userLatitude, userLongitude] = req.body.userLocation
+    let data
+    const activeKillzones = await Location.findAll({
       where: {isActive: true}
     })
-    const [userLat, userLon] = req.body.userLocation
-
-    let data = null
-
-    for (let i = 0; i < games.length; i++) {
-      const [targetLat, targetLon] = games[i].GPS
-      const latDiff = userLat - targetLat
-      const lonDiff = userLon - targetLon
-      const x = latDiff * 111111
-      const y = lonDiff * 111111 * Math.cos(Math.PI * targetLat / 180)
+    for (let i = 0; i < activeKillzones.length; i++) {
+      const killzone = activeKillzones[i]
+      const [targetLatitude, targetLongitude] = killzone.GPS
+      const latDiff = userLatitude - targetLatitude
+      const longDiff = userLongitude - targetLongitude
+      // convert degrees to meters
+      const x = latitudeDiff * 111111
+      const y =
+        longitudeDiff * 111111 * Math.cos(Math.PI * targetLatitude / 180)
+      // pythagorean theorem
       const distance = Math.sqrt(x ** 2 + y ** 2)
-      if (distance < games[i].radius) {
-        data = games[i]
+      if (distance <= killzone.radius) {
+        data = killzone
         break
       }
     }
-
-    res.json(data)
+    res.json(data ? data : null)
   } catch (error) {
     next(error)
   }
