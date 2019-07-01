@@ -19,6 +19,7 @@ router.put('/active', async (req, res, next) => {
       const y =
         longitudeDiff * 111111 * Math.cos(Math.PI * targetLatitude / 180)
       // pythagorean theorem
+
       const distance = Math.sqrt(x ** 2 + y ** 2)
       if (distance <= killzone.radius) {
         data = killzone
@@ -26,6 +27,23 @@ router.put('/active', async (req, res, next) => {
       }
     }
     res.json(data ? data : null)
+  } catch (error) {
+    next(error)
+  }
+})
+router.get('/active/:locationID', async (req, res, next) => {
+  try {
+    const location = Location.findByPk(req.params.locationID)
+    res.send(location)
+  } catch (error) {
+    next(error)
+  }
+})
+router.put('/active/:locationID', async (req, res, next) => {
+  try {
+    const location = Location.findByPk(req.params.locationID)
+    await location.update({isActive: false})
+    res.sendStatus(204)
   } catch (error) {
     next(error)
   }
