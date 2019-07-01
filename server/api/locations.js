@@ -2,7 +2,7 @@ const router = require('express').Router()
 const {Location} = require('../db/models')
 module.exports = router
 
-router.get('/active', async (req, res, next) => {
+router.put('/active', async (req, res, next) => {
   try {
     const games = await Location.findAll({
       where: {isActive: true}
