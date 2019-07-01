@@ -13,7 +13,7 @@ const Location = db.define('location', {
   radius: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    deaultValue: 50
+    defaultValue: 50
   }
 })
 
