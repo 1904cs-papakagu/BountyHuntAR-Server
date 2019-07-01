@@ -7,7 +7,24 @@ router.get('/active', async (req, res, next) => {
     const games = await Location.findAll({
       where: {isActive: true}
     })
-    res.json(games)
+    const [userLat, userLon] = req.body.userLocation
+
+    let data = null
+
+    for (let i = 0; i < games.length; i++) {
+      const [targetLat, targetLon] = games[i].GPS
+      const latDiff = userLat - targetLat
+      const lonDiff = userLon - targetLon
+      const x = latDiff * 111111
+      const y = lonDiff * 111111 * Math.cos(Math.PI * targetLat / 180)
+      const distance = Math.sqrt(x ** 2 + y ** 2)
+      if (distance < games[i].radius) {
+        data = games[i]
+        break
+      }
+    }
+
+    res.json(data)
   } catch (error) {
     next(error)
   }
