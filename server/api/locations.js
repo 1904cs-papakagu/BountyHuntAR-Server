@@ -16,7 +16,7 @@ router.put('/active', async (req, res, next) => {
       const latDiff = userLat - targetLat
       const lonDiff = userLon - targetLon
       const x = latDiff * 111111
-      const y = lonDiff * 111111 * Math.cos(Math.PI * targetLat / 180)
+      const y = lonDiff * 111111 * Math.cos((Math.PI * targetLat) / 180)
       const distance = Math.sqrt(x ** 2 + y ** 2)
       if (distance < games[i].radius) {
         data = games[i]
@@ -25,6 +25,23 @@ router.put('/active', async (req, res, next) => {
     }
 
     res.json(data)
+  } catch (error) {
+    next(error)
+  }
+})
+router.get('/active/:locationID', async (req, res, next) => {
+  try {
+    const location = Location.findByPk(req.params.locationID)
+    res.send(location)
+  } catch (error) {
+    next(error)
+  }
+})
+router.put('/active/:locationID', async (req, res, next) => {
+  try {
+    const location = Location.findByPk(req.params.locationID)
+    await location.update({isActive: false})
+    res.sendStatus(204)
   } catch (error) {
     next(error)
   }
