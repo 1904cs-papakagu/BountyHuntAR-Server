@@ -14,19 +14,19 @@ async function seed() {
 
   const locations = await Promise.all([
     Location.create({
-      GPS: [40.7050975, -74.00901303],
+      GPS: [40.705063, -74.00919], // oasis
       isActive: true,
-      radius: 50
+      radius: 15
     }),
     Location.create({
-      GPS: [0, 0],
+      GPS: [40.704968, -74.00899], // SE corner of fullstack building (corner of senior room)
       isActive: false,
-      radius: 50
+      radius: 15
     }),
     Location.create({
-      GPS: [180, 0],
+      GPS: [40.705145, -74.009481], // NW corner of fullstack building (corner of cafeteria)
       isActive: false,
-      radius: 50
+      radius: 15
     })
   ])
 
