@@ -17,7 +17,7 @@ router.put('/active', async (req, res, next) => {
       // convert degrees to meters
       const x = latitudeDiff * 111111
       const y =
-        longitudeDiff * 111111 * Math.cos(Math.PI * targetLatitude / 180)
+        longitudeDiff * 111111 * Math.cos((Math.PI * targetLatitude) / 180)
       // pythagorean theorem
 
       const distance = Math.sqrt(x ** 2 + y ** 2)
@@ -46,7 +46,14 @@ router.post('/active', async (req, res, next) => {
     next(error)
   }
 })
-
+router.get('/active', async (req, res, next) => {
+  try {
+    const activeLocations = await Location.findAll({where: {isActive: true}})
+    res.send(activeLocations)
+  } catch (error) {
+    next(error)
+  }
+})
 router.get('/:locationID', async (req, res, next) => {
   try {
     const id = req.params.locationID
