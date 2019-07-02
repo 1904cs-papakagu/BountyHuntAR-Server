@@ -12,8 +12,8 @@ router.put('/active', async (req, res, next) => {
     for (let i = 0; i < activeKillzones.length; i++) {
       const killzone = activeKillzones[i]
       const [targetLatitude, targetLongitude] = killzone.GPS
-      const latDiff = userLatitude - targetLatitude
-      const longDiff = userLongitude - targetLongitude
+      const latitudeDiff = userLatitude - targetLatitude
+      const longitudeDiff = userLongitude - targetLongitude
       // convert degrees to meters
       const x = latitudeDiff * 111111
       const y =
