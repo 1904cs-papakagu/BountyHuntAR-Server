@@ -5,7 +5,7 @@ module.exports = router
 router.put('/active', async (req, res, next) => {
   try {
     const [userLatitude, userLongitude] = req.body.userLocation
-    let data
+    let data = null
     const activeKillzones = await Location.findAll({
       where: {isActive: true}
     })
@@ -26,7 +26,7 @@ router.put('/active', async (req, res, next) => {
         break
       }
     }
-    res.json(data ? data : null)
+    res.json(data)
   } catch (error) {
     next(error)
   }
