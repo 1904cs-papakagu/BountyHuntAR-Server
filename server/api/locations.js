@@ -49,8 +49,10 @@ router.post('/active', async (req, res, next) => {
 
 router.get('/:locationID', async (req, res, next) => {
   try {
-    const location = Location.findByPk(req.params.locationID)
-    res.send(location)
+    const id = req.params.locationID
+    const location = await Location.findByPk(id)
+    await location.update({isActive: true})
+    res.send(`location ${id} is online`)
   } catch (error) {
     next(error)
   }
