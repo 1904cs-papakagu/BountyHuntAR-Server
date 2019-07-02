@@ -7,6 +7,14 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     defaultValue: `Agent${Date.now() % 100000}`
   },
+  score: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  cash: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,

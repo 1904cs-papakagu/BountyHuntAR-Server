@@ -31,19 +31,26 @@ router.put('/active', async (req, res, next) => {
     next(error)
   }
 })
-router.get('/active/:locationID', async (req, res, next) => {
+
+router.post('/active', async (req, res, next) => {
   try {
-    const location = Location.findByPk(req.params.locationID)
-    res.send(location)
+    const {userId, killzoneId, userScore} = req.body
+    const location = await findByPk(killzoneId)
+    const user = await findByPk(userId)
+    const cash = user.cash + location.value
+    const score = user.score + userScore
+    await location.update({isActive: false})
+    await user.update({cash, score})
+    res.sendStatus(204)
   } catch (error) {
     next(error)
   }
 })
-router.put('/active/:locationID', async (req, res, next) => {
+
+router.get('/:locationID', async (req, res, next) => {
   try {
     const location = Location.findByPk(req.params.locationID)
-    await location.update({isActive: false})
-    res.sendStatus(204)
+    res.send(location)
   } catch (error) {
     next(error)
   }
