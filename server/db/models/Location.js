@@ -8,12 +8,18 @@ const Location = db.define('location', {
   },
   isActive: {
     type: Sequelize.BOOLEAN,
+    allowNull: false,
     defaultValue: true
   },
   radius: {
     type: Sequelize.INTEGER,
     allowNull: false,
     defaultValue: 50
+  },
+  value: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 1000
   }
 })
 
