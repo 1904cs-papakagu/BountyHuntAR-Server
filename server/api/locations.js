@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Location} = require('../db/models')
+const {Location, User} = require('../db/models')
 module.exports = router
 
 router.put('/active', async (req, res, next) => {
@@ -35,8 +35,8 @@ router.put('/active', async (req, res, next) => {
 router.post('/active', async (req, res, next) => {
   try {
     const {userId, killzoneId, userScore} = req.body
-    const location = await findByPk(killzoneId)
-    const user = await findByPk(userId)
+    const location = await Location.findByPk(killzoneId)
+    const user = await User.findByPk(userId)
     const cash = user.cash + location.value
     const score = user.score + userScore
     await location.update({isActive: false})
