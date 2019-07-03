@@ -8,6 +8,7 @@ module.exports = io => {
     })
 
     socket.on('killTarget', function(room) {
+      console.log(`the target in room ${room} has been killed`)
       io.sockets.in(room).emit('targetKilled')
     })
 
