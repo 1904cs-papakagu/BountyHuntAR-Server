@@ -17,7 +17,7 @@ router.put('/active', async (req, res, next) => {
       // convert degrees to meters
       const x = latitudeDiff * 111111
       const y =
-        longitudeDiff * 111111 * Math.cos((Math.PI * targetLatitude) / 180)
+        longitudeDiff * 111111 * Math.cos(Math.PI * targetLatitude / 180)
       // pythagorean theorem
 
       const distance = Math.sqrt(x ** 2 + y ** 2)
@@ -31,7 +31,32 @@ router.put('/active', async (req, res, next) => {
     next(error)
   }
 })
-
+router.post('/add', async (req, res, next) => {
+  try {
+    if (req.user.isAdmin) {
+      await Location.create(req.body)
+      res.sendStatus(200)
+    } else {
+      res.sendStatus(403)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+router.put('/edit', async (req, res, next) => {
+  try {
+    if (req.user.isAdmin) {
+      const {GPS, value, isActive} = req.body
+      const location = await Location.findByPk(req.body.locationId)
+      await location.update({GPS, value, isActive})
+      res.sendStatus(200)
+    } else {
+      res.sendStatus(403)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
 router.post('/active', async (req, res, next) => {
   try {
     const {userId, killzoneId, userScore} = req.body
@@ -67,7 +92,7 @@ router.get('/:locationID', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const locations = await Location.findAll()
+    const locations = await Location.findAll({order: [['createdAt', 'ASC']]})
     res.json(locations)
   } catch (error) {
     next(error)

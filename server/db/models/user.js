@@ -4,8 +4,7 @@ const db = require('../db')
 
 const User = db.define('user', {
   userName: {
-    type: Sequelize.STRING,
-    defaultValue: `Agent${Date.now() % 100000}`
+    type: Sequelize.STRING
   },
   score: {
     type: Sequelize.INTEGER,
@@ -36,6 +35,10 @@ const User = db.define('user', {
       return () => this.getDataValue('salt')
     }
   },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   googleId: {
     type: Sequelize.STRING
   }
@@ -49,9 +52,13 @@ module.exports = User
 User.prototype.correctPassword = function(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
-
+User.beforeCreate(user => {
+  user.userName = `Agent ${Math.floor(
+    (Math.random() * 1000 + Date.now()) % 100000
+  )}`
+})
 /**
- * classMethods
+ * classMethodsn
  */
 User.generateSalt = function() {
   return crypto.randomBytes(16).toString('base64')

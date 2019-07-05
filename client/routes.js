@@ -4,7 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, Home, About, Leaderboard} from './components'
 import {me} from './store'
-
+import Location from './components/Location'
 /**
  * COMPONENT
  */
@@ -24,12 +24,13 @@ class Routes extends Component {
         <Route path="/home" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/leaderboard" component={Leaderboard} />
-
+        <Route path="/locations" component={Location} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
           </Switch>
         )}
+        {}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
@@ -44,7 +45,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: state.user.isAdmin
   }
 }
 
