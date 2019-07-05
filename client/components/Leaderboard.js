@@ -1,30 +1,18 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-
-const dummyData = [
-  {
-    userName: 'User1',
-    score: 73
-  },
-  {
-    userName: 'User2',
-    score: 82
-  },
-  {
-    userName: 'User3',
-    score: 93
-  },
-  {
-    userName: 'User4',
-    score: 61
-  },
-  {
-    userName: 'User5',
-    score: 41
-  }
-]
+import Axios from 'axios'
 
 class Leaderboard extends Component {
+  constructor() {
+    super()
+    this.state = {
+      users: []
+    }
+  }
+  async componentDidMount() {
+    const {data} = await Axios.get('/api/users')
+    this.setState({users: data})
+  }
   render() {
     return (
       <div>
@@ -36,11 +24,11 @@ class Leaderboard extends Component {
               <th>Name:</th>
               <th>Score:</th>
             </tr>
-            {dummyData.sort().map((row, index) => (
+            {this.state.users.map((user, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{row.userName}</td>
-                <td>{row.score}</td>
+                <td>{user.userName}</td>
+                <td>{user.score}</td>
               </tr>
             ))}
           </tbody>
