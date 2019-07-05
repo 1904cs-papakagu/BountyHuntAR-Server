@@ -5,12 +5,10 @@ module.exports = router
 router.put('/active', async (req, res, next) => {
   try {
     const [userLatitude, userLongitude] = req.body.userLocation
-    console.log('REQ.BODY.USERLOCATION:', req.body.userLocation)
     let data = null
     const activeKillzones = await Location.findAll({
       where: {isActive: true}
     })
-    console.log('ACTIVEKILLZONES:', activeKillzones)
     for (let i = 0; i < activeKillzones.length; i++) {
       const killzone = activeKillzones[i]
       const [targetLatitude, targetLongitude] = killzone.GPS
@@ -28,7 +26,6 @@ router.put('/active', async (req, res, next) => {
         break
       }
     }
-    console.log('DATA:', data)
     res.json(data)
   } catch (error) {
     next(error)
