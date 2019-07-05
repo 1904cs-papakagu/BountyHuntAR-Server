@@ -7,9 +7,9 @@ module.exports = io => {
       socket.join(room)
     })
 
-    socket.on('killTarget', function(room) {
-      console.log(`the target in room ${room} has been killed`)
-      io.sockets.in(room).emit('targetKilled')
+    socket.on('killTarget', function(room, uid) {
+      console.log(`the target in room ${room} has been killed by User #${uid}`)
+      io.sockets.in(room).emit('targetKilled', `${uid}`)
     })
 
     socket.on('disconnect', () => {
