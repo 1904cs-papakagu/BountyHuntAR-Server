@@ -5,9 +5,7 @@ module.exports = io => {
     const allAgents = {}
 
     function agentPosition({displacement, transform}) {
-      return transform.reduce((pos, comp, index) => {
-        pos.push(comp - displacement[index])
-      }, [])
+      return transform.map((comp, i) => comp - displacement[i])
     }
 
     socket.on('join', function(locationId, userId, displacement) {
