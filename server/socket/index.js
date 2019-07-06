@@ -25,7 +25,7 @@ module.exports = io => {
       const room = allAgents[locationId]
       room[userId].transform = transform
       console.log('All online agents:', allAgents)
-
+      console.log('TRANSFORM:', transform)
       io.sockets
         .in(locationId)
         .emit('agentUpdate', userId, agentPosition(room[userId]))
@@ -35,6 +35,7 @@ module.exports = io => {
       console.log(
         `the target in room ${locationId} has been killed by User #${userId}`
       )
+      allAgents[locationId] = {}
       io.sockets.in(locationId).emit('targetKilled', `${userId}`)
     })
 
