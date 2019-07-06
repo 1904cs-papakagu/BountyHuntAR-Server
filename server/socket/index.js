@@ -2,7 +2,11 @@ module.exports = io => {
   io.on('connection', socket => {
     console.log(`A player has connected: ${socket.id}`)
 
-    const allAgents = {}
+    const allAgents = {
+      1: {},
+      2: {},
+      3: {}
+    }
 
     function agentPosition({displacement, transform}) {
       return transform.map((comp, i) => comp - displacement[i])
@@ -10,16 +14,9 @@ module.exports = io => {
 
     socket.on('join', function(locationId, userId, displacement) {
       const newAgent = {displacement, transform: [0, 0, 0]}
-      if (allAgents[locationId]) {
-        const room = allAgents[locationId]
-        room[userId] = newAgent
-      } else {
-        const room = {}
-        room[userId] = newAgent
-        allAgents[locationId] = room
-      }
+      const room = allAgents[locationId]
+      room[userId] = newAgent
       console.log('All online agents:', allAgents)
-
       socket.join(locationId)
       io.sockets.in(locationId).emit('agentUpdate', displacement)
     })
