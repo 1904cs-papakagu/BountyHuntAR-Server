@@ -35,6 +35,7 @@ module.exports = io => {
       console.log(
         `the target in room ${locationId} has been killed by User #${userId}`
       )
+      allAgents[locationId] = {}
       io.sockets.in(locationId).emit('targetKilled', `${userId}`)
     })
 
