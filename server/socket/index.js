@@ -1,12 +1,12 @@
+const allAgents = {
+  1: {},
+  2: {},
+  3: {}
+}
+
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A player has connected: ${socket.id}`)
-
-    const allAgents = {
-      1: {},
-      2: {},
-      3: {}
-    }
 
     function agentPosition({displacement, transform}) {
       return transform.map((comp, i) => comp - displacement[i])
