@@ -59,8 +59,8 @@ router.put('/edit', async (req, res, next) => {
 })
 router.post('/active', async (req, res, next) => {
   try {
-    const {userId, killzoneId, userScore} = req.body
-    const location = await Location.findByPk(killzoneId)
+    const {locationId, userId, userScore} = req.body
+    const location = await Location.findByPk(locationId)
     const user = await User.findByPk(userId)
     const cash = user.cash + location.value
     const score = user.score + userScore
