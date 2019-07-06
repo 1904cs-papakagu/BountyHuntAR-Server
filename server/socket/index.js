@@ -31,7 +31,9 @@ module.exports = io => {
       room[userId].transform = transform
       console.log('All online agents:', allAgents)
 
-      io.sockets.in(locationId).emit('agentUpdate', agentPosition(room[userId]))
+      io.sockets
+        .in(locationId)
+        .emit('agentUpdate', userId, agentPosition(room[userId]))
     })
 
     socket.on('killTarget', function(locationId, userId) {
