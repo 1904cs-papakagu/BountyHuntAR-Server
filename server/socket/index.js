@@ -18,7 +18,7 @@ module.exports = io => {
       room[userId] = newAgent
       console.log('All online agents:', allAgents)
       socket.join(locationId)
-      io.sockets.in(locationId).emit('agentUpdate', displacement)
+      io.sockets.in(locationId).emit('agentUpdate', userId, displacement)
     })
 
     socket.on('updateAgent', function(locationId, userId, transform) {
