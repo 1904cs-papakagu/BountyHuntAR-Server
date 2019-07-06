@@ -25,7 +25,7 @@ module.exports = io => {
       const room = allAgents[locationId]
       room[userId].transform = transform
       console.log('All online agents:', allAgents)
-
+      console.log('TRANSFORM:', transform)
       io.sockets
         .in(locationId)
         .emit('agentUpdate', userId, agentPosition(room[userId]))
