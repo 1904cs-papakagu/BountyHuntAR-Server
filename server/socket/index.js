@@ -1,15 +1,44 @@
 module.exports = io => {
   io.on('connection', socket => {
-    console.log(`A socket connection to the server has been made: ${socket.id}`)
+    console.log(`A player has connected: ${socket.id}`)
 
-    socket.on('join', function(room) {
-      console.log(`${socket.id} joined ${room}!`)
-      socket.join(room)
+    const allAgents = {}
+
+    function agentPosition({displacement, transform}) {
+      return transform.reduce((pos, comp, index) => {
+        pos.push(comp - displacement[index])
+      }, [])
+    }
+
+    socket.on('join', function(locationId, userId, displacement) {
+      const newAgent = {displacement, transform: [0, 0, 0]}
+      if (allAgents[locationId]) {
+        const room = allAgents[locationId]
+        room[userId] = newAgent
+      } else {
+        const room = {}
+        room[userId] = newAgent
+        allAgents[locationId] = room
+      }
+      console.log('All online agents:', allAgents)
+
+      socket.join(locationId)
+      io.sockets.in(locationId).emit('agentUpdate', displacement)
     })
 
-    socket.on('killTarget', function(room, uid) {
-      console.log(`the target in room ${room} has been killed by User #${uid}`)
-      io.sockets.in(room).emit('targetKilled', `${uid}`)
+    socket.on('updateAgent', function(locationId, userId, transform) {
+      const room = allAgents[locationId]
+      room[userId].transform = transform
+      console.log('All online agents:', allAgents)
+
+      io.sockets.in(locationId).emit('agentUpdate', agentPosition(room[userId]))
+    })
+
+    socket.on('killTarget', function(locationId, userId) {
+      console.log(
+        `the target in room ${locationId} has been killed by User #${userId}`
+      )
+      io.sockets.in(locationId).emit('targetKilled', `${userId}`)
     })
 
     socket.on('disconnect', () => {
