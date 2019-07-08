@@ -2,6 +2,10 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Location = db.define('location', {
+  name: {
+    type: Sequelize.TEXT,
+    defaultValue: ''
+  },
   GPS: {
     type: Sequelize.ARRAY(Sequelize.DOUBLE),
     allowNull: false
