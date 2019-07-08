@@ -22,13 +22,17 @@ module.exports = io => {
     })
 
     socket.on('updateAgent', function(locationId, userId, transform) {
-      const room = allAgents[locationId]
-      room[userId].transform = transform
-      console.log('All online agents:', allAgents)
-      console.log('TRANSFORM:', transform)
-      io.sockets
-        .in(locationId)
-        .emit('agentUpdate', userId, agentPosition(room[userId]))
+      try {
+        const room = allAgents[locationId]
+        room[userId].transform = transform
+        console.log('All online agents:', allAgents)
+        console.log('TRANSFORM:', transform)
+        io.sockets
+          .in(locationId)
+          .emit('agentUpdate', userId, agentPosition(room[userId]))
+      } catch (err) {
+        console.log('updateAgent rejected')
+      }
     })
 
     socket.on('killTarget', function(locationId, userId) {
