@@ -9,13 +9,9 @@ module.exports = io => {
     })
 
     socket.on('updateAgent', function(locationId, userId, transform) {
-      try {
         io.sockets
           .in(locationId)
           .emit('agentUpdate', userId, transform)
-      } catch (err) {
-        console.log('updateAgent rejected')
-      }
     })
 
     socket.on('killTarget', function(locationId, userId) {
