@@ -82,7 +82,9 @@ router.get('/active', async (req, res, next) => {
 router.get('/activateAll', async (req, res, next) => {
   try {
     const locations = await Location.findAll()
-    await locations.update({isActive: true})
+    locations.forEach(async location => {
+      await location.update({isActive: true})
+    })
     res.sendStatus(200)
   } catch (error) {
     next(error)
