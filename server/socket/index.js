@@ -1,4 +1,3 @@
-
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A player has connected: ${socket.id}`)
@@ -9,16 +8,15 @@ module.exports = io => {
     })
 
     socket.on('updateAgent', function(locationId, userId, transform) {
-        io.sockets
-          .in(locationId)
-          .emit('agentUpdate', userId, transform)
+      io.sockets.in(locationId).emit('agentUpdate', userId, transform)
     })
 
     socket.on('killTarget', function(locationId, userId) {
-      console.log(
-        `the target in room ${locationId} has been killed by User #${userId}`
-      )
       io.sockets.in(locationId).emit('targetKilled', `${userId}`)
+    })
+
+    socket.on('killAgent', function(locationId, userId) {
+      io.sockets.in(locationId).emit('agentKilled', userId)
     })
 
     socket.on('disconnect', () => {
