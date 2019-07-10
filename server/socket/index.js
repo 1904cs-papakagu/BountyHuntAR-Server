@@ -1,14 +1,9 @@
-const allAgents = {
-  1: {},
-  2: {},
-  3: {}
-}
-
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A player has connected: ${socket.id}`)
 
     socket.on('join', function(locationId, userId, displacement) {
+      socket.join(locationId)
       io.sockets.in(locationId).emit('agentUpdate', userId, displacement)
     })
 

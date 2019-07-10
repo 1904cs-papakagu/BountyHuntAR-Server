@@ -79,6 +79,17 @@ router.get('/active', async (req, res, next) => {
     next(error)
   }
 })
+router.get('/activateAll', async (req, res, next) => {
+  try {
+    const locations = await Location.findAll()
+    locations.forEach(async location => {
+      await location.update({isActive: true})
+    })
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
 router.get('/:locationID', async (req, res, next) => {
   try {
     const id = req.params.locationID
@@ -89,7 +100,6 @@ router.get('/:locationID', async (req, res, next) => {
     next(error)
   }
 })
-
 router.get('/', async (req, res, next) => {
   try {
     const locations = await Location.findAll({order: [['createdAt', 'ASC']]})
