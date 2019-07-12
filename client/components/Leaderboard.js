@@ -16,8 +16,16 @@ class Leaderboard extends Component {
   }
   render() {
     return (
-      <span id="leaderboard">
-        <Table color="grey" inverted size="small" collapsing={true}>
+      // <span id="leaderboard">
+      <Container
+        style={{
+          display: 'flex',
+          margin: '1em',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Table color="grey" inverted>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Rank</Table.HeaderCell>
@@ -28,16 +36,14 @@ class Leaderboard extends Component {
           <Table.Body>
             {this.state.users.map((user, index) => (
               <Table.Row key={index}>
-                <Table.Cell>{index + 1}</Table.Cell>
-                <Table.Cell width={25} collapsing={true}>
-                  {user.userName}
-                </Table.Cell>
-                <Table.Cell width="ten">{user.score}</Table.Cell>
+                <Table.Cell collapsing={true}>{index + 1}</Table.Cell>
+                <Table.Cell collapsing={true}>{user.userName}</Table.Cell>
+                <Table.Cell collapsing={true}>{user.score}</Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
         </Table>
-      </span>
+      </Container>
     )
   }
 }

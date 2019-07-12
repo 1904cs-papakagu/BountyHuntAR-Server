@@ -34,7 +34,13 @@ export default class AddLocationForm extends Component {
 
   render() {
     return (
-      <Container>
+      <Container
+        style={{
+          display: 'flex',
+
+          justifyContent: 'center'
+        }}
+      >
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
             <Form.Input

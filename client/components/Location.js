@@ -14,50 +14,52 @@ class Location extends Component {
 
   render() {
     return this.props.isAdmin ? (
-      <Grid verticalAlign="middle" padded>
-        <Grid.Row columns={1}>
-          <Grid.Column>
-            <Table size="small" color="grey" inverted collapsing={true}>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell width={2}>Name</Table.HeaderCell>
-                  <Table.HeaderCell width={2}>Value</Table.HeaderCell>
+      <Container
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+          margin: '1em'
+        }}
+      >
+        <Table size="small" color="grey" inverted collapsing={true}>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell width={2}>Name</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Value</Table.HeaderCell>
 
-                  <Table.HeaderCell width={2}>Latitude</Table.HeaderCell>
-                  <Table.HeaderCell width={2}>Longitude</Table.HeaderCell>
-                  <Table.HeaderCell width={2}>Status</Table.HeaderCell>
-                  <Table.HeaderCell width={2} />
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {this.props.locations.map(location => (
-                  <Table.Row key={location.id}>
-                    <Table.Cell collapsing={true}>{location.name}</Table.Cell>
-                    <Table.Cell collapsing={true}>{location.value}</Table.Cell>
-                    <Table.Cell collapsing={true}>{location.GPS[0]}</Table.Cell>
-                    <Table.Cell collapsing={true}>{location.GPS[1]}</Table.Cell>
-                    <Table.Cell collapsing warning={!location.isActive}>
-                      {String(location.isActive)}
-                    </Table.Cell>
-                    <Table.Cell>
-                      <EditLocation
-                        location={location}
-                        updateLocations={this.props.getLocations}
-                      />
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
-          </Grid.Column>
-        </Grid.Row>
+              <Table.HeaderCell width={2}>Latitude</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Longitude</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Radius</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Status</Table.HeaderCell>
+              <Table.HeaderCell width={2} />
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {this.props.locations.map(location => (
+              <Table.Row key={location.id}>
+                <Table.Cell collapsing={true}>{location.name}</Table.Cell>
+                <Table.Cell collapsing={true}>{location.value}</Table.Cell>
+                <Table.Cell collapsing={true}>{location.GPS[0]}</Table.Cell>
+                <Table.Cell collapsing={true}>{location.GPS[1]}</Table.Cell>
+                <Table.Cell collapsing={true}>{location.radius}</Table.Cell>
+                <Table.Cell collapsing warning={!location.isActive}>
+                  {String(location.isActive)}
+                </Table.Cell>
+                <Table.Cell>
+                  <EditLocation
+                    location={location}
+                    updateLocations={this.props.getLocations}
+                  />
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
 
-        <Grid.Row columns={1}>
-          <Grid.Column>
-            <AddLocationForm updateLocations={this.props.getLocations} />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+        <AddLocationForm updateLocations={this.props.getLocations} />
+      </Container>
     ) : (
       <h1> NOT ALLOWED</h1>
     )

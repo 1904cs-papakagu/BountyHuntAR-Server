@@ -238,3 +238,8 @@ main {
   align-items: center;
   justify-content: center;
 }
+
+.ui.modal.form {
+  display: flex;
+  justify-content: center;
+}
