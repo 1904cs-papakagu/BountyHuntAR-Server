@@ -46,9 +46,9 @@ router.post('/add', async (req, res, next) => {
 router.put('/edit', async (req, res, next) => {
   try {
     if (req.user.isAdmin) {
-      const {GPS, value, isActive} = req.body
+      const {GPS, value, isActive, name} = req.body
       const location = await Location.findByPk(req.body.locationId)
-      await location.update({GPS, value, isActive})
+      await location.update({GPS, value, isActive, name})
       res.sendStatus(200)
     } else {
       res.sendStatus(403)

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Axios from 'axios'
+import {Container, Header, Table} from 'semantic-ui-react'
 
 class Leaderboard extends Component {
   constructor() {
@@ -15,25 +16,28 @@ class Leaderboard extends Component {
   }
   render() {
     return (
-      <div>
-        <h1>LEADERBOARD</h1>
-        <table>
-          <tbody>
-            <tr>
-              <th>Rank:</th>
-              <th>Name:</th>
-              <th>Score:</th>
-            </tr>
+      <span id="leaderboard">
+        <Table color="grey" inverted size="small" collapsing={true}>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Rank</Table.HeaderCell>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Score</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
             {this.state.users.map((user, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{user.userName}</td>
-                <td>{user.score}</td>
-              </tr>
+              <Table.Row key={index}>
+                <Table.Cell>{index + 1}</Table.Cell>
+                <Table.Cell width={25} collapsing={true}>
+                  {user.userName}
+                </Table.Cell>
+                <Table.Cell width="ten">{user.score}</Table.Cell>
+              </Table.Row>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </Table.Body>
+        </Table>
+      </span>
     )
   }
 }

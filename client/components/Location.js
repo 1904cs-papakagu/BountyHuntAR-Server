@@ -3,45 +3,61 @@ import {connect} from 'react-redux'
 import {getLocationsThunk} from '../store/location'
 import AddLocationForm from './AddLocationFrom'
 import EditLocation from './EditLocation'
-
+import {Container, Header, Button, Table, Grid} from 'semantic-ui-react'
 class Location extends Component {
   constructor() {
     super()
-    this.state = {
-      showEditID: null
-    }
-    this.edit = this.edit.bind(this)
   }
   componentDidMount() {
     this.props.getLocations()
   }
-  edit(id) {
-    this.setState({showEditID: id})
-  }
+
   render() {
     return this.props.isAdmin ? (
-      <div>
-        {this.props.locations.map(location => (
-          <div key={location.id}>
-            <h3>Value: {location.value}</h3>
-            <h3>Status: {String(location.isActive)}</h3>
-            <button type="button" onClick={() => this.edit(location.id)}>
-              EDIT{' '}
-            </button>
+      <Grid verticalAlign="middle" padded>
+        <Grid.Row columns={1}>
+          <Grid.Column>
+            <Table size="small" color="grey" inverted collapsing={true}>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell width={2}>Name</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>Value</Table.HeaderCell>
 
-            {this.state.showEditID === location.id ? (
-              <EditLocation
-                edit={this.edit}
-                location={location}
-                updateLocations={this.props.getLocations}
-              />
-            ) : (
-              ''
-            )}
-          </div>
-        ))}
-        <AddLocationForm updateLocations={this.props.getLocations} />
-      </div>
+                  <Table.HeaderCell width={2}>Latitude</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>Longitude</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>Status</Table.HeaderCell>
+                  <Table.HeaderCell width={2} />
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {this.props.locations.map(location => (
+                  <Table.Row key={location.id}>
+                    <Table.Cell collapsing={true}>{location.name}</Table.Cell>
+                    <Table.Cell collapsing={true}>{location.value}</Table.Cell>
+                    <Table.Cell collapsing={true}>{location.GPS[0]}</Table.Cell>
+                    <Table.Cell collapsing={true}>{location.GPS[1]}</Table.Cell>
+                    <Table.Cell collapsing warning={!location.isActive}>
+                      {String(location.isActive)}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <EditLocation
+                        location={location}
+                        updateLocations={this.props.getLocations}
+                      />
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row columns={1}>
+          <Grid.Column>
+            <AddLocationForm updateLocations={this.props.getLocations} />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     ) : (
       <h1> NOT ALLOWED</h1>
     )
