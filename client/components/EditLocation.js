@@ -1,13 +1,5 @@
 import React, {Component} from 'react'
-import {
-  Container,
-  Header,
-  Button,
-  Table,
-  Grid,
-  Modal,
-  Form
-} from 'semantic-ui-react'
+import {Button, Modal, Form, Dropdown, Select} from 'semantic-ui-react'
 import axios from 'axios'
 export default class EditLocation extends Component {
   constructor(props) {
@@ -22,9 +14,15 @@ export default class EditLocation extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleBool = this.handleBool.bind(this)
     this.close = this.close.bind(this)
   }
-
+  handleBool(event, value) {
+    this.setState({isActive: value.value})
+    // console.log(event.target.value)
+    console.log(event.target.value)
+    // console.log(value)
+  }
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value})
   }
@@ -50,43 +48,6 @@ export default class EditLocation extends Component {
 
   render() {
     return (
-      // <div>
-      //   <form onSubmit={this.handleSubmit} name={location}>
-      //     <div>
-      //       <input
-      //         name="latitude"
-      //         type="number"
-      //         value={this.state.latitude}
-      //         onChange={this.handleChange}
-      //       />
-      //     </div>
-      //     <div>
-      //       <input
-      //         name="longitude"
-      //         type="number"
-      //         value={this.state.longitude}
-      //         onChange={this.handleChange}
-      //       />
-      //     </div>
-      //     <div>
-      //       <input
-      //         name="value"
-      //         type="number"
-      //         value={this.state.value}
-      //         onChange={this.handleChange}
-      //       />
-      //     </div>
-      //     <div>
-      //       <select value={this.state.isActive} onChange={this.handleBool}>
-      //         <option value={true}>true</option>
-      //         <option value={false}>false</option>
-      //       </select>
-      //     </div>
-      //     <div>
-      //       <button type="submit">Edit Location</button>
-      //     </div>
-      //   </form>
-      // </div>
       <Modal
         trigger={
           <Button size="mini" onClick={() => this.setState({open: true})}>
@@ -124,6 +85,18 @@ export default class EditLocation extends Component {
                 value={this.state.value}
                 onChange={this.handleChange}
               />
+              <Form.Field>
+                <Dropdown
+                  value={this.state.isActive}
+                  name="isActive"
+                  selection={true}
+                  options={[
+                    {text: 'true', value: true},
+                    {text: 'false', value: false}
+                  ]}
+                  onChange={this.handleBool}
+                />
+              </Form.Field>
               <Form.Button content="Submit" color="green" />
             </Form.Group>
           </Form>
