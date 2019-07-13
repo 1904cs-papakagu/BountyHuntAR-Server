@@ -16,8 +16,8 @@ router.get('/', async (req, res, next) => {
 
 router.post('/score', async (req, res, next) => {
   try {
-    console.log(req.user.id, '____req.user.id_____')
-    console.log(req.body.userId, '____req.body.id_____')
+    console.log(typeof req.user.id, '____req.user.id_____')
+    console.log(typeof req.body.userId, '____req.body.id_____')
     if (req.user.id === req.body.userId) {
       const user = await User.findByPk(req.body.userId)
       const score = user.score + req.body.score
