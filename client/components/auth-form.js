@@ -2,29 +2,43 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Form, Container, Grid, Message} from 'semantic-ui-react'
 
 /**
  * COMPONENT
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
-
+  console.log(error)
   return (
-    <div className="auth">
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <input name="email" type="text" placeholder="email" />
-        </div>
-        <div>
-          <input name="password" type="password" placeholder="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
-    </div>
+    <Form
+      onSubmit={handleSubmit}
+      name={name}
+      error
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: '1em'
+      }}
+    >
+      <Form.Field width={5}>
+        <Form.Input placeholder="Email" name="email" type="string" />
+      </Form.Field>
+      <Form.Field width={5}>
+        <Form.Input placeholder="password" name="password" type="password" />
+      </Form.Field>
+      <Form.Button content="Submit">{displayName}</Form.Button>
+      {error &&
+        error.response && (
+          <Message
+            error
+            header="Unable to Authenticate"
+            content={error.response.data}
+          />
+        )}
+    </Form>
   )
 }
 
