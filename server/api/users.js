@@ -17,6 +17,7 @@ router.get('/', async (req, res, next) => {
 router.post('/score', async (req, res, next) => {
   try {
     if (req.user.id === Number(req.body.userId)) {
+      console.log(req.body.score, '___req.body.score_____')
       const user = await User.findByPk(req.body.userId)
       const score = user.score + Number(req.body.score)
       await user.update({score})
