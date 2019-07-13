@@ -33,6 +33,8 @@ router.put('/active', async (req, res, next) => {
 })
 router.post('/add', async (req, res, next) => {
   try {
+    console.log(req.user.id, '____req.user.id_____')
+    // console.log(req.body.id, '____req.body.id_____')
     if (req.user.isAdmin) {
       await Location.create(req.body)
       res.sendStatus(200)
