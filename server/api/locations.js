@@ -65,7 +65,7 @@ router.post('/active', async (req, res, next) => {
     const cash = user.cash + location.value
     const score = user.score + userScore
     await location.update({isActive: false})
-    await user.update({cash, score})
+    await user.update({cash})
     res.sendStatus(204)
   } catch (error) {
     next(error)
